@@ -1,0 +1,17 @@
+{
+    "name": "bruno/pacientes",
+    "description": "Criação de um CRUD de pacientes com login de autenticação atraves do github",
+    "liscense": "MIT",
+    "authors": [
+        {
+            "name": "Bruno",
+            "email": "brunoomoises7@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    }
+}
