@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Paciente;
+use App\Model\PacienteModel;
 
 class PacienteController
 {
