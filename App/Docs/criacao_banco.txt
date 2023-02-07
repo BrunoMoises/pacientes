@@ -1,0 +1,14 @@
+CREATE DATABASE cadastro;
+
+CREATE TABLE cadastro.paciente (id INT NOT NULL AUTO_INCREMENT , nome VARCHAR(255) NOT NULL , cpf INT(11) NOT NULL , PRIMARY KEY (id)) ENGINE = InnoDB;
+
+INSERT INTO cadastro.paciente (id, nome, cpf) VALUES (NULL, 'Bruno Moises', '00011122233');
+INSERT INTO cadastro.paciente (id, nome, cpf) VALUES (NULL, 'Paciente 2', '00011122244');
+INSERT INTO cadastro.paciente (id, nome, cpf) VALUES (NULL, 'Paciente 3', '00011122255');
+INSERT INTO cadastro.paciente (id, nome, cpf) VALUES (NULL, 'Paciente 4', '00011122266');
+INSERT INTO cadastro.paciente (id, nome, cpf) VALUES (NULL, 'Paciente 5', '00011122277');
+INSERT INTO cadastro.paciente (id, nome, cpf) VALUES (NULL, 'Paciente 6', '00011122288');
+INSERT INTO cadastro.paciente (id, nome, cpf) VALUES (NULL, 'Paciente 7', '00011122299');
+INSERT INTO cadastro.paciente (id, nome, cpf) VALUES (NULL, 'Paciente 8', '00022211133');
+INSERT INTO cadastro.paciente (id, nome, cpf) VALUES (NULL, 'Paciente 9', '00022211122');
+INSERT INTO cadastro.paciente (id, nome, cpf) VALUES (NULL, 'Paciente 10', '00022211144');
