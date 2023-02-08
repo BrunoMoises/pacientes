@@ -31,7 +31,12 @@ function deletePaciente(id) {
 }
 
 function editaPaciente(id) {
+    $('#modalNovoPaciente').find('.modal-title').text('Editar Paciente');
 
+    if (id <= 0)
+        return;
+
+    readById(id, false);
 }
 
 function createTable(data) {
@@ -79,6 +84,17 @@ function resetForm() {
     $('#txtCpf').val("");
 }
 
+function editModal(data) {
+    if (data == null)
+        return;
+
+    $('#txtId').val(data.id);
+    $('#txtNome').val(data.nome);
+    $('#txtCpf').val(data.cpf);
+
+    openModalCreate(false);
+}
+
 function readAll() {
     $.ajax({
         url: "api/paciente",
@@ -116,6 +132,21 @@ function create(obj) {
         },
         complete: function () {
             $('#btnSubmit').attr("disabled", false);
+        }
+    });
+}
+
+function readById(id, view) {
+    $.ajax({
+        url: "api/paciente/" + id,
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            if (view) {
+                createViewModal(data);
+            } else {
+                editModal(data);
+            }
         }
     });
 }

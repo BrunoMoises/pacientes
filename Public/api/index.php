@@ -50,6 +50,11 @@ switch ($method) {
         }
         break;
     case 'PUT':
+        if ($controller != null && $id != null) {
+            echo $pacienteController->update($id, $data);
+        } else {
+            echo json_encode(["result" => "invalid"]);
+        }
         break;
     case 'DELETE':
         break;
