@@ -74,7 +74,7 @@ function sendForm() {
     if (obj.id == 0) {
         create(obj);
     } else {
-        
+        update(obj);
     }
 }
 
@@ -147,6 +147,32 @@ function readById(id, view) {
             } else {
                 editModal(data);
             }
+        }
+    });
+}
+
+function update(obj) {
+    $.ajax({
+        url: "api/paciente/" + obj.id,
+        type: "PUT",
+        data: obj,
+        dataType: "json",
+        beforeSend: function () {
+            $('#btnSubmit').attr("disabled", true);
+        },
+        success: function (data) {
+            if (data.result == "ok") {
+                closeModalCreate();
+                readAll();
+            } else {
+                alert("Houve um erro ao atualizar");
+            }
+        },
+        error: function (error) {
+            alert("Houve um erro ao atualizar");
+        },
+        complete: function () {
+            $('#btnSubmit').attr("disabled", false);
         }
     });
 }
