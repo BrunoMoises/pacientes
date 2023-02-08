@@ -4,6 +4,19 @@ $(document).ready(function () {
     readAll();
 });
 
+$('#bt-new').click(function () {
+    $('#modalNovoPaciente').find('.modal-title').text('Criar Paciente');
+    openModalCreate(true);
+});
+
+function openModalCreate(reset = true) {
+    $('#modalNovoPaciente').modal('show');
+}
+
+function closeModalCreate(reset = true) {
+    $('#modalNovoPaciente').modal('hide');
+}
+
 function deletePaciente(id) {
     
 }
