@@ -34,20 +34,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td width="10"><i class="bi-x-circle-fill icon icon-x pointer" title="Excluir paciente"
-                                aria-multiline="Excluir paciente" onclick="deletePaciente()"></i></td>
-                        <td width="10"><i class="bi-pencil-fill icon icon-edit pointer" title="Editar paciente"
-                                aria-multiline="Editar paciente" onclick="editaPaciente()"></i></td>
-                        <td align="center" width="40">1</td>
-                        <td>Bruno</td>
-                        <td>12345678912</td>
-                    </tr>
+
                 </tbody>
             </table>
+            <script id="tmplLinha" type="text/template">
+                <tr>
+                    <td width="10"><i class="bi-x-circle-fill icon icon-x pointer" title="Excluir paciente"
+                            aria-multiline="Excluir paciente" onclick="deletePaciente('{{Id}}')"></i></td>
+                    <td width="10"><i class="bi-pencil-fill icon icon-edit pointer" title="Editar paciente"
+                            aria-multiline="Editar paciente" onclick="editaPaciente('{{Id}}')"></i></td>
+                    <td align="center" width="40">{{Id}}</td>
+                    <td>{{Nome}}</td>
+                    <td>{{Cpf}}</td>
+                </tr>
+            </script>
         </div>
     </div>
+    <script src="js/jquery-3.6.3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
