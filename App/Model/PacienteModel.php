@@ -94,7 +94,7 @@ class PacienteModel
 
         $this->items->id = isset($id) ? $id : die();
 
-        if (!$this->items->deletePessoa())
+        if (!$this->items->deletePaciente())
             return "Erro ao gravar";
 
         return "ok";

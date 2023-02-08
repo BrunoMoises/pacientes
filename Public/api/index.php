@@ -43,6 +43,11 @@ switch ($method) {
         }
         break;
     case 'POST':
+        if ($controller != null && $id == null) {
+            echo $pacienteController->create($data);
+        } else {
+            echo json_encode(["result" => "invalid"]);
+        }
         break;
     case 'PUT':
         break;
