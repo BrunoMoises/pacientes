@@ -27,7 +27,11 @@ function closeModalCreate(reset = true) {
 }
 
 function deletePaciente(id) {
-    
+    if (confirm("Deseja realmente remover?")) {
+        deleteId(id);
+    } else {
+        return;
+    }
 }
 
 function editaPaciente(id) {
@@ -173,6 +177,21 @@ function update(obj) {
         },
         complete: function () {
             $('#btnSubmit').attr("disabled", false);
+        }
+    });
+}
+
+function deleteId(id) {
+    $.ajax({
+        url: "api/paciente/" + id,
+        type: "DELETE",
+        dataType: "json",
+        success: function (data) {
+            if (data.result == "ok")
+                readAll();
+        },
+        error: function (error) {
+            alert("Houve um erro na deleção");
         }
     });
 }

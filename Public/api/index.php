@@ -57,6 +57,11 @@ switch ($method) {
         }
         break;
     case 'DELETE':
+        if ($controller != null && $id != null) {
+            echo $pacienteController->delete($id);
+        } else {
+            echo json_encode(["result" => "invalid"]);
+        }
         break;
     default:
         echo json_encode(["result" => "invalid request"]);
