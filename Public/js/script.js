@@ -22,7 +22,7 @@ function openModalCreate(reset = true) {
 
 function closeModalCreate(reset = true) {
     $('#modalNovoPaciente').modal('hide');
-    
+
     if (reset) resetForm();
 }
 
