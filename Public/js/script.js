@@ -1,7 +1,21 @@
 "use strict"
 
+const urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get("token");
+
 $(document).ready(function () {
-    readAll();
+    fetch('https://api.github.com/user', {
+        headers: {
+            'Authorization': 'Token ' + token
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                window.location.href = 'index.php?erro=1';
+            } else {
+                readAll();
+            }
+        });
 });
 
 $('#bt-new').click(function () {
@@ -55,7 +69,7 @@ function createTable(data) {
 
     for (var i = 0; i < data.length; i++) {
         var paciente = {};
-        paciente.Id= data[i].id;
+        paciente.Id = data[i].id;
         paciente.Nome = data[i].nome;
         paciente.Cpf = data[i].cpf;
 
