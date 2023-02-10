@@ -35,6 +35,7 @@ git clone https://github.com/BrunoMoises/pacientes.git
 Ao acessar o sistema, você será direcionado para a página de autenticação. Clique no botão `Logue no GitHub` para autenticar-se através da API de autenticação do GitHub.
 
 Após a autenticação, você será direcionado para a página inicial do sistema onde poderá adicionar, editar, excluir e visualizar pacientes.
+<br><br>
 
 ### Conclusão
 Este projeto é uma boa opção para quem precisa de um sistema de gerenciamento de pacientes simples e rápido de configurar, além de oferecer a opção de autenticação através da API de autenticação do GitHub.
