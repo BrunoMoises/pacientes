@@ -1,63 +1,61 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 require_once("../../vendor/autoload.php");
 use App\Controller\PacienteController;
 
-$controller = null;
-$id = null;
-$method = $_SERVER["REQUEST_METHOD"];
-$uri = $_SERVER["REQUEST_URI"];
-$data = null;
-parse_str(file_get_contents('php://input'), $data);
-$unsetCount = 3;
+$pacienteController = new PacienteController();
+$requestMethod = $_SERVER["REQUEST_METHOD"];
+$requestUri = $_SERVER["REQUEST_URI"];
+$requestData = null;
+parse_str(file_get_contents('php://input'), $requestData);
+$uriParts = explode("/", $requestUri);
+$controller = $id = null;
 
-$ex = explode("/", $uri);
-
-for ($i = 0; $i < $unsetCount; $i++) {
-    unset($ex[$i]);
+// Remover as primeiras 3 partes da URI
+for ($i = 0; $i < 3; $i++) {
+    unset($uriParts[$i]);
 }
 
-$ex = array_filter(array_values($ex));
+// Reindexar o array e extrair o nome do controlador e o ID, se existir
+$uriParts = array_values(array_filter($uriParts));
+if (isset($uriParts[0])) {
+    $controller = $uriParts[0];
+}
+if (isset($uriParts[1])) {
+    $id = $uriParts[1];
+}
 
-if (isset($ex[0]))
-    $controller = $ex[0];
-
-if (isset($ex[1]))
-    $id = $ex[1];
-
-$pacienteController = new PacienteController();
-
-switch ($method) {
+switch ($requestMethod) {
     case 'GET':
-        if ($controller != null && $id == null) {
+        if ($controller !== null && $id === null) {
             echo $pacienteController->readAll();
-        } else if ($controller != null && $id != null) {
+        } elseif ($controller !== null && $id !== null) {
             echo $pacienteController->readById($id);
         } else {
             echo json_encode(["result" => "invalid"]);
         }
         break;
     case 'POST':
-        if ($controller != null && $id == null) {
-            echo $pacienteController->create($data);
+        if ($controller !== null && $id === null) {
+            echo $pacienteController->create($requestData);
         } else {
             echo json_encode(["result" => "invalid"]);
         }
         break;
     case 'PUT':
-        if ($controller != null && $id != null) {
-            echo $pacienteController->update($id, $data);
+        if ($controller !== null && $id !== null) {
+            echo $pacienteController->update($id, $requestData);
         } else {
             echo json_encode(["result" => "invalid"]);
         }
         break;
     case 'DELETE':
-        if ($controller != null && $id != null) {
+        if ($controller !== null && $id !== null) {
             echo $pacienteController->delete($id);
         } else {
             echo json_encode(["result" => "invalid"]);
@@ -67,5 +65,3 @@ switch ($method) {
         echo json_encode(["result" => "invalid request"]);
         break;
 }
-
-?>

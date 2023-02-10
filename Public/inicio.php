@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Pacientes</title>
+    <link rel="icon" type="image/x-icon" href="./img/icon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -17,7 +18,8 @@
         <header>
             <div class="row mt-3">
                 <div class="col-md-6">
-                    <h3>PACIENTES</h3>
+                    <a href="index.php"><img class="pointer" src="./img/icon.png" alt="PACIENTES"
+                            style="max-width: 40px;"></a>
                 </div>
                 <div class="col-md-6 text-end">
                     <button type="button" class="btn btn-outline-info" id="bt-new">Novo paciente</button>
@@ -64,11 +66,13 @@
                             <div class="col-md-6">
                                 <label for="txtNome">Nome</label>
                                 <input type="hidden" id="txtId" value="">
-                                <input type="text" id="txtNome" placeholder="Preencha o nome..." class="form-control">
+                                <input type="text" id="txtNome" placeholder="Preencha o nome..." class="form-control"
+                                    required>
                             </div>
                             <div class="col-md-6">
                                 <label for="txtCpf">CPF</label>
-                                <input type="number" id="txtCpf" placeholder="Preencha o CPF..." class="form-control">
+                                <input type="number" id="txtCpf" placeholder="Preencha o CPF..." class="form-control"
+                                    required>
                             </div>
                         </div>
                     </div>

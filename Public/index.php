@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Pacientes</title>
-    <link rel="icon" type="image/x-icon" href="./img/logo.ico">
+    <link rel="icon" type="image/x-icon" href="./img/icon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -17,7 +17,8 @@
         <header>
             <div class="row mt-3">
                 <div class="col-md text-center">
-                    <h3>PACIENTES</h3>
+                    <a href="index.php"><img class="pointer" src="./img/icon.png" alt="PACIENTES"
+                            style="max-width: 60px;"></a>
                 </div>
             </div>
         </header>
