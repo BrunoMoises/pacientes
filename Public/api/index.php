@@ -12,7 +12,8 @@ $pacienteController = new PacienteController();
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 $requestUri = $_SERVER["REQUEST_URI"];
 $requestData = null;
-parse_str(file_get_contents('php://input'), $requestData);
+$json = file_get_contents('php://input');
+$requestData = json_decode($json);
 $uriParts = explode("/", $requestUri);
 $controller = $id = null;
 
