@@ -2,70 +2,80 @@
 
 namespace App\Database;
 
+use Exception;
+use PDO;
+
 class Database
 {
-    private $db;
-    private $db_table = "paciente";
-    public $id;
-    public $nome;
-    public $cpf;
-    public $result;
+    private PDO $conn;
+    private string $db_table = "paciente";
+    public string $id;
+    public string $nome;
+    public string $cpf;
 
-    public function __construct($db)
+    public function __construct()
     {
-        $this->db = $db;
+        $conn = new PDO("mysql:host=localhost;dbname=cadastro", 'root','');
+        $this->conn = $conn;
     }
 
-    public function getPacientes()
+    public function getPacientes(): false|\PDOStatement
     {
-        $sqlQuery = "SELECT id, nome, cpf FROM " . $this->db_table;
-        return $this->db->query($sqlQuery);
+        return $this->conn->query('SELECT id, nome, cpf FROM ' . $this->db_table );
     }
 
-    public function getId()
+    public function getId(): void
     {
-        $sqlQuery = "SELECT id, nome, cpf FROM " . $this->db_table . " WHERE id = " . $this->id;
-        $record = $this->db->query($sqlQuery);
-        $dataRow = $record->fetch_assoc();
+        $sqlQuery = "SELECT id, nome, cpf FROM " . $this->db_table . " WHERE id = ? ";
+        $record = $this->conn->prepare($sqlQuery);
+        $record->execute(array($this->id));
+        $dataRow = $record->fetch();
         $this->nome = $dataRow['nome'];
         $this->cpf = $dataRow['cpf'];
     }
 
-    public function createPaciente()
+    public function createPaciente(): bool
     {
-        $this->nome = htmlspecialchars(strip_tags($this->nome));
-        $this->cpf = htmlspecialchars(strip_tags($this->cpf));
-        $sqlQuery = "INSERT INTO cadastro.paciente (id, nome, cpf) VALUES (NULL,'" . $this->nome . "','" . $this->cpf . "');";
-        $this->db->query($sqlQuery);
-        if ($this->db->affected_rows > 0) {
+        $sqlQuery = "INSERT INTO cadastro.paciente (id, nome, cpf) VALUES (NULL,?,?);";
+        $record = $this->conn->prepare($sqlQuery);
+        try {
+            $this->conn->beginTransaction();
+            $record->execute([$this->nome,$this->cpf]);
+            $this->conn->commit();
+            return false;
+        }catch (Exception $e){
+            $this->conn->rollback();
             return true;
         }
-        return false;
     }
 
-    public function updatePaciente()
+    public function updatePaciente(): bool
     {
-        $this->nome = htmlspecialchars(strip_tags($this->nome));
-        $this->cpf = htmlspecialchars(strip_tags($this->cpf));
-
-        $sqlQuery = "UPDATE " . $this->db_table . " SET nome = '" . $this->nome . "',
-                    cpf = '" . $this->cpf . "'
-                    WHERE id = " . $this->id;
-
-        $this->db->query($sqlQuery);
-        if ($this->db->affected_rows > 0) {
+        $sqlQuery = "UPDATE " . $this->db_table . " SET nome = ?, cpf = ? WHERE id = ?";
+        $record = $this->conn->prepare($sqlQuery);
+        try {
+            $this->conn->beginTransaction();
+            $record->execute([$this->nome,$this->cpf,$this->id]);
+            $this->conn->commit();
             return true;
+        }catch (Exception $e){
+            $this->conn->rollback();
+            return false;
         }
-        return false;
     }
 
-    function deletePaciente()
+    function deletePaciente(): bool
     {
-        $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE id = " . $this->id;
-        $this->db->query($sqlQuery);
-        if ($this->db->affected_rows > 0) {
+        $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE id = ?";
+        $record = $this->conn->prepare($sqlQuery);
+        try {
+            $this->conn->beginTransaction();
+            $record->execute([$this->id]);
+            $this->conn->commit();
             return true;
+        }catch (Exception $e){
+            $this->conn->rollback();
+            return false;
         }
-        return false;
     }
 }
