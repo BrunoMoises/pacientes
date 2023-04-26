@@ -4,18 +4,15 @@ namespace App\Model;
 
 use App\Entity\Paciente;
 use App\Database\Database;
-use mysqli;
 
 class PacienteModel
 {
-    private $db;
     private $items;
     private $listPaciente = [];
 
     public function __construct()
     {
-        $this->db = new mysqli('localhost', 'root', '', 'cadastro');
-        $this->items = new Database($this->db);
+        $this->items = new Database();
         $this->load();
     }
 
@@ -84,15 +81,15 @@ class PacienteModel
     private function load()
     {
         $records = $this->items->getPacientes();
-        $itemCount = $records->num_rows;
+        $itemCount = $records->rowCount();
 
         if ($itemCount === 0) {
             http_response_code(404);
             return json_encode(array("message" => "Não encontrado."));
         }
 
-        while ($row = $records->fetch_assoc()) {
-            array_push($this->listPaciente, $row);
+        while ($row = $records->fetch()) {
+            $this->listPaciente[] = $row;
         }
     }
 }
