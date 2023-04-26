@@ -7,7 +7,6 @@ use App\Model\PacienteModel;
 
 class PacienteController
 {
-    
     private $pacienteModel;
     public function __construct()
     {
@@ -34,7 +33,6 @@ class PacienteController
         if ($result != "") {
             return json_encode(["result" => $result]);
         }
-
 
         $result = $this->pacienteModel->update($paciente);
 
@@ -72,8 +70,8 @@ class PacienteController
     {
         return new Paciente(
             null,
-            (isset($data['nome']) ? filter_var($data['nome'], FILTER_SANITIZE_STRING) : null),
-            (isset($data['cpf']) ? filter_var($data['cpf'], FILTER_SANITIZE_STRING) : null)
+            (isset($data->nome) ? htmlspecialchars($data->nome, ENT_HTML5) : null),
+            (isset($data->cpf) ? htmlspecialchars($data->cpf, ENT_HTML5) : null)
         );
     }
 
