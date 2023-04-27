@@ -7,12 +7,12 @@ use App\Model\PacienteModel;
 
 class PacienteController
 {
-    private $pacienteModel;
+    private PacienteModel $pacienteModel;
     public function __construct()
     {
         $this->pacienteModel = new PacienteModel();
     }
-    function create($data = null)
+    function create($data = null): false|string
     {
         $paciente = $this->convertType($data);
         $result = $this->validate($paciente);
@@ -24,7 +24,7 @@ class PacienteController
         return json_encode(["result" => $this->pacienteModel->create($paciente)]);
     }
 
-    function update($id = 0, $data = null)
+    function update(int $id = 0, $data = null): false|string
     {
         $paciente = $this->convertType($data);
         $paciente->setId($id);
@@ -39,7 +39,7 @@ class PacienteController
         return json_encode(["result" => $result]);
     }
 
-    function delete($id = 0)
+    function delete(int $id = 0): false|string
     {
         $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
@@ -51,7 +51,7 @@ class PacienteController
         return json_encode(["result" => $result]);
     }
 
-    function readById($id = 0)
+    function readById(int $id = 0): false|string
     {
         $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
@@ -61,12 +61,12 @@ class PacienteController
         return $this->pacienteModel->readById($id);
     }
 
-    function readAll()
+    function readAll(): false|string
     {
         return json_encode($this->pacienteModel->readAll());
     }
 
-    private function convertType($data)
+    private function convertType($data): Paciente
     {
         return new Paciente(
             null,
@@ -75,7 +75,7 @@ class PacienteController
         );
     }
 
-    private function validate(Paciente $paciente, $update = false)
+    private function validate(Paciente $paciente, $update = false): string
     {
         if ($update && $paciente->getId() <= 0)
             return "invalid id";

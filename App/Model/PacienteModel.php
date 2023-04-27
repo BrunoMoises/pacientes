@@ -7,8 +7,8 @@ use App\Database\Database;
 
 class PacienteModel
 {
-    private $items;
-    private $listPaciente = [];
+    private Database $items;
+    private array $listPaciente = [];
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ class PacienteModel
         return $this->listPaciente;
     }
 
-    public function readById(int $id)
+    public function readById(int $id): false|string
     {
         $this->items->id = $id;
         $this->items->getId();
@@ -42,7 +42,7 @@ class PacienteModel
         return json_encode($pac_arr);
     }
 
-    public function create(Paciente $paciente)
+    public function create(Paciente $paciente): string
     {
         $this->items->nome = $paciente->getNome();
         $this->items->cpf = $paciente->getCpf();
@@ -54,7 +54,7 @@ class PacienteModel
         return "ok";
     }
 
-    public function update(Paciente $paciente)
+    public function update(Paciente $paciente): string
     {
         $this->items->id = $paciente->getId();
         $this->items->nome = $paciente->getNome();
@@ -67,7 +67,7 @@ class PacienteModel
         return "ok";
     }
 
-    public function delete(int $id)
+    public function delete(int $id): string
     {
         $this->items->id = $id;
 
@@ -78,14 +78,15 @@ class PacienteModel
         return "ok";
     }
 
-    private function load()
+    private function load(): void
     {
         $records = $this->items->getPacientes();
         $itemCount = $records->rowCount();
 
         if ($itemCount === 0) {
             http_response_code(404);
-            return json_encode(array("message" => "Não encontrado."));
+            json_encode(array("message" => "Não encontrado."));
+            return;
         }
 
         while ($row = $records->fetch()) {
