@@ -49,7 +49,7 @@ class PacienteModel
         return json_encode($pac_arr);
     }
 
-    public function create(Paciente $paciente)
+    public function create(Paciente $paciente): false|string
     {
         $values = [
             $paciente->getNome(),

@@ -21,10 +21,10 @@ class PacienteController
             return json_encode(["result" => $result]);
         }
 
-        return json_encode(["result" => $this->pacienteModel->create($paciente)]);
+        return $this->pacienteModel->create($paciente);
     }
 
-    function update(int $id = 0, $data = null): false|string
+    function update(int $id = 0, $data = null): string
     {
         $paciente = $this->convertType($data);
         $paciente->setId($id);
@@ -34,9 +34,7 @@ class PacienteController
             return json_encode(["result" => $result]);
         }
 
-        $result = $this->pacienteModel->update($paciente);
-
-        return json_encode(["result" => $result]);
+        return $this->pacienteModel->update($paciente);
     }
 
     function delete(int $id = 0): false|string
@@ -46,9 +44,7 @@ class PacienteController
         if ($id <= 0)
             return json_encode(["result" => "invalid id"]);
 
-        $result = $this->pacienteModel->delete($id);
-
-        return json_encode(["result" => $result]);
+        return $this->pacienteModel->delete($id);
     }
 
     function readById(int $id = 0): false|string
