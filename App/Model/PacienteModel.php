@@ -4,7 +4,6 @@ namespace App\Model;
 
 use App\Database\Connection;
 use App\Entity\Paciente;
-use App\Database\Database;
 use Exception;
 use PDO;
 
@@ -73,7 +72,7 @@ class PacienteModel
         } catch (Exception $e) {
             $this->conn->rollback();
             http_response_code(400);
-            return json_encode(array("result" => "Não foi possível a criação."));
+            return json_encode(array("result" => "Não foi possível a criação. Error: " . $e));
         }
     }
 
